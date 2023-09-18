@@ -1,0 +1,69 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.offline as py
+from plotly.offline import init_notebook_mode, iplot
+import plotly.graph_objs as go
+from sklearn.model_selection import train_test_split
+from plotly import tools
+init_notebook_mode(connected=True)
+import plotly.figure_factory as ff
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import  accuracy_score
+from sklearn.metrics import confusion_matrix
+from sklearn.preprocessing import StandardScaler, LabelBinarizer
+import xgboost as xgb
+from xgboost.sklearn import XGBClassifier
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+
+import warnings
+warnings.filterwarnings('ignore')
+iris = pd.read_csv("IRIS.csv")
+iris
+print("the dataset has {} rows and {} features".format(iris.shape[0],iris.shape[1]))
+print(iris.info())
+print(iris.describe())
+iris.plot(kind='scatter', x='sepal_length', y='sepal_width') ;
+plt.show()
+iris.plot(kind='scatter', y='petal_length', x='petal_width') ;
+plt.show()
+sns.set_style("whitegrid")
+sns.pairplot(data=iris,hue="species",size=3)\
+   .add_legend()
+plt.show()
+iris.hist(edgecolor='grey', linewidth=1.5)
+fig=plt.gcf()
+fig.set_size_inches(15,6)
+plt.show()
+plt.figure(figsize=(9,6))
+sns.heatmap(iris.corr(),annot=True,fmt="f",cmap="RdBu_r")
+plt.show()
+iris_setosa = iris[iris['species']=='Iris-setosa']
+print(iris_setosa.head())
+counts, bin_edges= np.histogram(iris_setosa['petal_width'],bins=10, density= True)
+pdf=counts/(sum(counts))
+print(pdf)
+
+print(bin_edges)
+
+cdf=np.cumsum(pdf)
+print(cdf)
+
+plt.plot(bin_edges[1:],pdf)
+plt.plot(bin_edges[1:],cdf)
+plt.show()
+sns.boxplot(x='species',y='petal_length', data=iris)
+plt.show()
+sns.boxplot(y='species',x='petal_width', data=iris)
+plt.show()
+sns.violinplot(x="species", y="petal_width", data=iris, size=8)
+plt.show()
+
